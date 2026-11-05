@@ -161,7 +161,7 @@ def check_05_assignment_expiry(d, today, s):
         else:
             continue
         out.append(Finding(5, "Controls", sev, f"{r['control_id']} -> {r['assigned_to']} ({r['risk_id']})",
-                           f"Mitigation assignment {txt}; the risk becomes unmitigated.",
+                           f"Mitigation assignment {txt}; the risk " + ("is now unmitigated." if sev == "High" else "will become unmitigated."),
                            "Renew after review or remove the access.", _src(r)))
     return out
 
@@ -191,6 +191,7 @@ def check_06_never_evidenced(d, today, s):
 # ---------- Emergency access ----------
 
 def check_07_ff_too_many_users(d, today, s):
+    """Firefighter IDs assigned to too many users."""
     ff = d["ff_setup"]
     if ff is None:
         return None
@@ -208,6 +209,7 @@ def check_07_ff_too_many_users(d, today, s):
 
 
 def check_08_vague_reasons(d, today, s):
+    """Emergency sessions with vague or missing reasons."""
     logs = d["ff_logs"]
     if logs is None:
         return None
@@ -222,6 +224,7 @@ def check_08_vague_reasons(d, today, s):
 
 
 def check_09_late_review(d, today, s):
+    """Emergency logs not reviewed within the agreed window."""
     logs = d["ff_logs"]
     if logs is None:
         return None
@@ -242,6 +245,7 @@ def check_09_late_review(d, today, s):
 
 
 def check_10_self_review(d, today, s):
+    """Controller reviewing their own emergency session (self-review)."""
     logs = d["ff_logs"]
     if logs is None:
         return None
@@ -252,6 +256,7 @@ def check_10_self_review(d, today, s):
 
 
 def check_11_sensitive_actions(d, today, s):
+    """Sensitive actions run during emergency sessions."""
     logs = d["ff_logs"]
     if logs is None:
         return None
@@ -266,6 +271,7 @@ def check_11_sensitive_actions(d, today, s):
 
 
 def check_12_ff_owner_left(d, today, s):
+    """Firefighter owners or controllers missing or no longer active."""
     ff = d["ff_setup"]
     active = _active_users(d["users"])
     if ff is None or active is None:
