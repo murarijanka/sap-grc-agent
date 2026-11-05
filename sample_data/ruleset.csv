@@ -1,0 +1,9 @@
+risk_id,risk_description,risk_level,risk_active,risk_owner,business_process,function_id,function_active,action,action_in_system,action_last_used
+P001,Create vendor and pay vendor,High,Y,AFINCH,Procure to Pay,F_VEND_MAINT,Y,XK01,Y,2026-10-30
+P001,Create vendor and pay vendor,High,Y,AFINCH,Procure to Pay,F_PAY_RUN,Y,F110,Y,2026-10-31
+P002,Vendor maintenance and payment (old copy),High,Y,AFINCH,Procure to Pay,F_VEND_MAINT,Y,XK01,Y,2026-10-30
+P002,Vendor maintenance and payment (old copy),High,Y,AFINCH,Procure to Pay,F_PAY_RUN,Y,F110,Y,2026-10-31
+S010,Maintain users and roles,Critical,Y,,,F_USER_ADM,N,SU01,Y,2026-11-01
+O005,Create sales order and post goods issue,Medium,Y,BCHEN,Order to Cash,F_SO_CREATE,Y,VA01,Y,2026-11-02
+O005,Create sales order and post goods issue,Medium,Y,BCHEN,Order to Cash,F_GI_POST,Y,VL02,N,
+O005,Create sales order and post goods issue,Medium,Y,BCHEN,Order to Cash,F_GI_POST,Y,VL02N,Y,2024-03-15

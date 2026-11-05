@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+secrets/
+*.key
+# Never commit real customer exports or reports
+uploads/
+reports/
+customer_data/
+.DS_Store

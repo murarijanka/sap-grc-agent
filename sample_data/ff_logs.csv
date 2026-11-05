@@ -1,0 +1,5 @@
+session_id,ff_id,ff_user,logon_time,reason_code,reason_text,actions,reviewed_by,review_date
+1001,FF_FIN_01,JDOE,2026-10-01 09:12,PROD_FIX,INC-48213 correct blocked payment run for vendor 100245,F110;FBL1N,DGRAY,2026-10-03
+1002,FF_FIN_01,KLEE,2026-10-06 22:40,PROD_FIX,fix,SE16N;F110,DGRAY,2026-10-29
+1003,FF_BASIS_01,OKHAN,2026-10-20 07:55,BASIS,,SU01;PFCG,,
+1004,FF_FIN_01,DGRAY,2026-10-22 14:05,PROD_FIX,INC-48877 reverse duplicate posting doc 5100009812,FB08,DGRAY,2026-10-23

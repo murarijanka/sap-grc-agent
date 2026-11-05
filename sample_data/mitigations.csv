@@ -1,0 +1,5 @@
+control_id,control_description,owner,monitor,assigned_to,assignment_type,risk_id,valid_from,valid_to,last_evidence_date
+MC_P2P_01,Monthly review of vendor master changes,AFINCH,DGRAY,JDOE,User,P001,2025-01-01,2026-12-31,2026-10-05
+MC_P2P_01,Monthly review of vendor master changes,AFINCH,DGRAY,KLEE,User,P001,2025-01-01,2026-09-30,2026-10-05
+MC_SEC_02,Quarterly user admin log review,RTAYLOR,DGRAY,Z_SEC_ADMIN,Role,S010,2024-01-01,2027-12-31,
+MC_O2C_03,Weekly sales order exception report,,BCHEN,MPATEL,User,O005,2025-06-01,2028-06-30,2025-02-10
