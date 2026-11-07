@@ -11,6 +11,7 @@ import streamlit as st
 from grc_agent.checks import run_all
 from grc_agent.adapt import load_sap
 from grc_agent.sap import SapFormatError, read_report
+from grc_agent.explain import explain
 from grc_agent.report import build_pdf
 
 ROOT = Path(__file__).parent
@@ -83,7 +84,12 @@ if st.button("Run checks", type="primary", disabled=not ready):
     st.dataframe([{"Severity": f.severity, "Area": f.area, "Record": f.record, "Reason": f.reason,
                    "Source": "; ".join(f.source)} for f in findings], use_container_width=True, hide_index=True)
     out = tmp / "grc-readiness-report.pdf"
-    build_pdf(out, findings, skipped, inputs,
+    with st.spinner("Writing plain-English explanations (if configured)..."):
+        summary, exps = explain(findings, data)
+    if summary:
+        st.subheader("Summary")
+        st.write(summary)
+    build_pdf(out, findings, skipped, inputs, claude_summary=summary, explanations=exps,
               org_name="Sample company (synthetic data)" if use_sample else "Your organisation")
     st.download_button("Download PDF report", out.read_bytes(),
                        file_name=f"grc-readiness-report-{datetime.now():%Y%m%d}.pdf", mime="application/pdf")

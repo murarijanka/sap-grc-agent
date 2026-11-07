@@ -45,7 +45,7 @@ def _grid(data, widths, header_bg="#f2f4f7"):
     return t
 
 
-def build_pdf(path, findings, skipped, inputs, run_date=None, org_name="Sample company"):
+def build_pdf(path, findings, skipped, inputs, run_date=None, org_name="Sample company", claude_summary=None, explanations=None):
     run_date = run_date or datetime.now()
     st = _styles()
     P = lambda t, style="Cell": Paragraph(t, st[style])  # noqa: E731
@@ -69,7 +69,10 @@ def build_pdf(path, findings, skipped, inputs, run_date=None, org_name="Sample c
     by_area = Counter(f.area for f in findings)
     story += [P("Findings by area", "Heading3"),
               _grid([["Area", "Findings"]] + [[a, by_area[a]] for a in AREAS], [60 * mm, 30 * mm]),
-              Spacer(1, 6 * mm), P("Top 10 findings", "Heading3")]
+              Spacer(1, 6 * mm)]
+    if claude_summary:
+        story += [P("Summary (written by Claude from the findings)", "Heading3"), P(claude_summary, "BodyText"), Spacer(1, 4 * mm)]
+    story += [P("Top 10 findings", "Heading3")]
     top = [["#", "Severity", "Area", "Record", "Reason"]]
     for i, f in enumerate(findings[:10], 1):
         top.append([i, P(f"<font color='{SEV_COLOUR[f.severity].hexval()}'><b>{f.severity}</b></font>"),
@@ -86,9 +89,11 @@ def build_pdf(path, findings, skipped, inputs, run_date=None, org_name="Sample c
             continue
         rows = [["Check", "Severity", "Record", "Reason", "Recommended action", "Source"]]
         for f in items:
+            why = (explanations or {}).get(findings.index(f))
+            reason = f.reason + (f"<br/><i>{why}</i>" if why else "")
             rows.append([f.check_id,
                          P(f"<font color='{SEV_COLOUR[f.severity].hexval()}'><b>{f.severity}</b></font>"),
-                         P(f.record), P(f.reason), P(f.action), P("<br/>".join(f.source))])
+                         P(f.record), P(reason), P(f.action), P("<br/>".join(f.source))])
         story += [_grid(rows, [11 * mm, 16 * mm, 32 * mm, 50 * mm, 40 * mm, 31 * mm]), Spacer(1, 6 * mm)]
 
     # Appendix

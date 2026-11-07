@@ -4,6 +4,7 @@ from pathlib import Path
 
 from grc_agent.checks import run_all
 from grc_agent.adapt import UPLOADS, load_sap
+from grc_agent.explain import explain
 from grc_agent.report import build_pdf
 
 ap = argparse.ArgumentParser()
@@ -22,5 +23,6 @@ data = load_sap(paths)
 findings, skipped = run_all(data)
 inputs = {n: (Path(p).name, data['_raw_counts'][n]) for n, p in paths.items() if p}
 Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-build_pdf(a.out, findings, skipped, inputs, org_name="Sample company (synthetic data)" if a.sample else "Your organisation")
-print(f"{len(findings)} findings, {len(skipped)} checks skipped -> {a.out}")
+summary, exps = explain(findings, data)
+build_pdf(a.out, findings, skipped, inputs, claude_summary=summary, explanations=exps, org_name="Sample company (synthetic data)" if a.sample else "Your organisation")
+print(f"{len(findings)} findings, {len(skipped)} checks skipped, Claude explanations: {'on' if summary else 'off'} -> {a.out}")
