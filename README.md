@@ -4,6 +4,8 @@ A free, open tool that reads standard SAP Access Control 12.0 report exports and
 
 **Status:** early build. 12 checks, SAP report mapping, PDF report and upload screen work on synthetic data. Pilot testing on real exports is next; plain-English explanations by Claude are coming.
 
+**See a sample report:** [docs/sample-report.pdf](docs/sample-report.pdf) (synthetic company; explanations written by Claude from the findings).
+
 ## How it works
 - 12 checks run as fixed, tested Python rules. AI never decides a finding.
 - Each finding is traced to the source file and row.
