@@ -78,5 +78,14 @@ class TestChecks(unittest.TestCase):
             load_csv(ALL["users"], "ff_logs")
 
 
+class TestDates(unittest.TestCase):
+    def test_bad_date_rejected(self):
+        import tempfile
+        p = Path(tempfile.mkdtemp()) / "users.csv"
+        p.write_text("user_id,status,valid_to,last_logon\nA,Active,31/12/2026,2026-01-01\n")
+        with self.assertRaises(UploadError):
+            load_csv(p, "users")
+
+
 if __name__ == "__main__":
     unittest.main()

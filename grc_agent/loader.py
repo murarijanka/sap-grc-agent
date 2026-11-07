@@ -20,6 +20,22 @@ class UploadError(ValueError):
     pass
 
 
+DATE_COLUMNS = {"valid_from", "valid_to", "last_logon", "logon_time", "review_date",
+                "last_evidence_date", "action_last_used"}
+DATE_FORMATS = ("%Y-%m-%d", "%Y-%m-%d %H:%M", "%Y-%m-%d %H:%M:%S")
+
+
+def _valid_date(v):
+    from datetime import datetime
+    for fmt in DATE_FORMATS:
+        try:
+            datetime.strptime(v, fmt)
+            return True
+        except ValueError:
+            pass
+    return False
+
+
 def load_csv(path, name):
     """Return rows as dicts with '_row' = line number in the file (header is line 1)."""
     path = Path(path)
@@ -34,6 +50,9 @@ def load_csv(path, name):
             row = {k.strip(): (v or "").strip() for k, v in raw.items() if k}
             row["_row"] = i
             row["_file"] = path.name
+            for c in DATE_COLUMNS & row.keys():
+                if row[c] and not _valid_date(row[c]):
+                    raise UploadError(f"{name}: row {i}, column {c}: '{row[c]}' is not a date (use YYYY-MM-DD)")
             rows.append(row)
     return rows
 
