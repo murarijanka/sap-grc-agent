@@ -1,0 +1,6 @@
+User,User Type,Valid From,Valid To,Lock Status,Last Logon
+AFINCH,Dialog,01.01.2020,31.12.9999,,03.11.2026
+DGRAY,Dialog,01.01.2020,31.12.9999,,04.11.2026
+RTAYLOR,Dialog,01.01.2020,31.08.2026,,29.08.2026
+OLEFT,Dialog,01.01.2020,31.12.9999,Locked by administrator,01.02.2026
+JDOE,Dialog,01.01.2020,31.12.9999,,01.11.2026

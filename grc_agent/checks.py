@@ -141,13 +141,18 @@ def check_04_control_owner(d, today, s):
             out.append(Finding(4, "Controls", "High", r["control_id"],
                                f"Owner {r['owner']} is not an active user (left or locked).",
                                "Reassign the control to a current owner.", _src(r)))
+        mon = r.get("monitor", "")
+        if active is not None and mon and mon.upper() not in active:
+            out.append(Finding(4, "Controls", "Medium", f"{r['control_id']} monitor",
+                               f"Monitor {mon} is not an active user (left or locked).",
+                               "Assign a current monitor.", _src(r)))
     return out
 
 
 def check_05_assignment_expiry(d, today, s):
     """Mitigation assignments expired or expiring within the window."""
     m = d["mitigations"]
-    if m is None:
+    if m is None or not any(r.get("valid_to") for r in m):
         return None
     out, limit = [], today + timedelta(days=s["expiry_window_days"])
     for r in m:
@@ -230,6 +235,13 @@ def check_09_late_review(d, today, s):
         return None
     out = []
     for r in logs:
+        if r.get("review_status") is not None and "review_due" in r:
+            due = _d(r["review_due"])
+            if r["review_status"].strip().lower() not in {"finished", "closed", "approved", "completed"} and due and today > due:
+                out.append(Finding(9, "Emergency", "High", f"{r['ff_id']} session {r['session_id']}",
+                                   f"Log review request {r.get('review_request', '')} still open; due {due.date()}.",
+                                   "Controller to review now.", _src(r)))
+            continue
         lt, rv = _d(r["logon_time"]), _d(r["review_date"])
         if lt is None:
             continue
@@ -246,13 +258,22 @@ def check_09_late_review(d, today, s):
 
 def check_10_self_review(d, today, s):
     """Controller reviewing their own emergency session (self-review)."""
-    logs = d["ff_logs"]
-    if logs is None:
+    logs, ff = d["ff_logs"], d["ff_setup"]
+    if logs is None and ff is None:
         return None
-    return [Finding(10, "Emergency", "High", f"{r['ff_id']} session {r['session_id']}",
-                    f"User {r['ff_user']} reviewed their own emergency session.",
-                    "Assign an independent controller.", _src(r))
-            for r in logs if r["reviewed_by"] and r["reviewed_by"].upper() == r["ff_user"].upper()]
+    out = [Finding(10, "Emergency", "High", f"{r['ff_id']} session {r['session_id']}",
+                   f"User {r['ff_user']} reviewed their own emergency session.",
+                   "Assign an independent controller.", _src(r))
+           for r in logs or [] if r.get("reviewed_by") and r["reviewed_by"].upper() == r["ff_user"].upper()]
+    seen = set()
+    for r in ff or []:
+        c = r.get("controller", "")
+        if c and c.upper() == r["assigned_user"].upper() and (r["ff_id"], c) not in seen:
+            seen.add((r["ff_id"], c))
+            out.append(Finding(10, "Emergency", "High", f"{r['ff_id']} controller {c}",
+                               f"{c} is both a firefighter and the controller of this ID, so can review their own sessions.",
+                               "Assign a controller who cannot use this firefighter ID.", _src(r)))
+    return out
 
 
 def check_11_sensitive_actions(d, today, s):

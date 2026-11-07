@@ -1,0 +1,7 @@
+System,Rule Set,Access Risk ID,Access Risk Description,Access Risk Type,Access Risk Level,Business Process Description,Functions,Function Description,Action,Access Rule ID,Permission Object,Field,Status,Value From,Value To,Owner,Condition
+DEMO_ERP,GLOBAL,P001,Create vendor and pay vendor,Segregation of Duties,High,Procure to Pay,PR01,PR01 function,XK01,0001,S_TCODE,TCD,Active,XK01,,AFINCH,AND
+DEMO_ERP,GLOBAL,P001,Create vendor and pay vendor,Segregation of Duties,High,Procure to Pay,PR01,PR01 function,XK01,0001,F_LFA1_BUK,TCD,Active,XK01,,AFINCH,AND
+DEMO_ERP,GLOBAL,P001,Create vendor and pay vendor,Segregation of Duties,High,Procure to Pay,PR02,PR02 function,F110,0001,S_TCODE,TCD,Active,F110,,AFINCH,AND
+DEMO_ERP,GLOBAL,P002,Vendor and payment (old copy),Segregation of Duties,High,Procure to Pay,PR01,PR01 function,XK01,0001,S_TCODE,TCD,Active,XK01,,AFINCH,AND
+DEMO_ERP,GLOBAL,P002,Vendor and payment (old copy),Segregation of Duties,High,Procure to Pay,PR02,PR02 function,F110,0001,S_TCODE,TCD,Active,F110,,AFINCH,AND
+DEMO_ERP,GLOBAL,B010,Maintain users and roles,Segregation of Duties,Critical,,BS09,BS09 function,SU01,0001,S_TCODE,TCD,InActive,SU01,,,AND

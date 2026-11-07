@@ -1,0 +1,3 @@
+OrgUnit Description,Control ID,Control Description,Org Unit ID,Approver,Monitor,Name,Access Risk ID,Access Risk Description,Access Rule ID,Access Risk Level,System
+DEMO FINANCE,MC_P2P_01,Monthly vendor change review,10000001,AFINCH,DGRAY,A Finch,P001,Create vendor and pay vendor,*,High,DEMO_ERP
+DEMO IT,MC_SEC_02,Quarterly user admin log review,10000002,RTAYLOR,OLEFT,R Taylor,B010,Maintain users and roles,*,Critical,DEMO_ERP
