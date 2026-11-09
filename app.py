@@ -42,8 +42,8 @@ SAMPLE = {"ruleset": "access_rule_detail.csv", "controls": "mitigating_control_r
           "ff_controllers": "controllers.csv", "ff_log": "consolidated_log_report.csv",
           "ff_reviews": "log_review_requests.csv", "users": "suim_users.csv"}
 
-st.set_page_config(page_title="SAP GRC Readiness Agent", page_icon="🛡️", layout="centered")
-st.title("SAP GRC Readiness Agent")
+st.set_page_config(page_title="GRC Readiness Agent for SAP Access Control", page_icon="🛡️", layout="centered")
+st.title("GRC Readiness Agent for SAP Access Control")
 st.caption("Read-only checks on SAP Access Control exports. Nothing is stored or sent anywhere: "
            "files are processed on this machine. People decide every fix.")
 

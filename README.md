@@ -1,4 +1,4 @@
-# SAP GRC Readiness Agent (Level 1)
+# GRC Readiness Agent for SAP Access Control (Level 1)
 
 A free, open tool that reads standard SAP Access Control 12.0 report exports and reports governance gaps before a migration to GRC for SAP HANA. It is read-only: it never logs in to SAP and never changes SAP. People decide every fix.
 

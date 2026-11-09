@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for your interest in the SAP GRC Readiness Agent.
+Thank you for your interest in the GRC Readiness Agent for SAP Access Control.
 
 - **Feedback is welcome** through GitHub Issues: findings that were wrong or missing, report layouts that did not load, and ideas for new checks.
 - **Please never post real SAP data** (user IDs, names, logs or exports) in an issue. Describe the column names or the pattern instead.

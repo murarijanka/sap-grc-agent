@@ -12,7 +12,7 @@ from .checks import CHECKS
 
 SEV_COLOUR = {"High": colors.HexColor("#b42318"), "Medium": colors.HexColor("#b54708"), "Low": colors.HexColor("#475467")}
 AREAS = ["Rule set", "Controls", "Emergency"]
-CREDIT = "SAP GRC Readiness Agent - designed and directed by Murari Janka, built with Claude (Anthropic). Apache 2.0."
+CREDIT = "GRC Readiness Agent for SAP Access Control - designed and directed by Murari Janka, built with Claude (Anthropic). Apache 2.0."
 DISCLAIMER = ("Read-only analysis of uploaded exports. Findings come from fixed rules; people decide every fix. "
               "Not affiliated with SAP SE.")
 
@@ -51,12 +51,12 @@ def build_pdf(path, findings, skipped, inputs, run_date=None, org_name="Sample c
     P = lambda t, style="Cell": Paragraph(t, st[style])  # noqa: E731
     doc = SimpleDocTemplate(str(path), pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm,
                             topMargin=15 * mm, bottomMargin=18 * mm,
-                            title="SAP GRC readiness report", author="SAP GRC Readiness Agent")
+                            title="GRC readiness report", author="GRC Readiness Agent for SAP Access Control")
     story = []
 
     # Page 1: summary
     sev = Counter(f.severity for f in findings)
-    story += [P("SAP GRC readiness report", "Title"),
+    story += [P("GRC readiness report", "Title"),
               P(f"{org_name} &middot; run on {run_date:%d %b %Y}", "Small"), Spacer(1, 6 * mm)]
     summary = [["High", "Medium", "Low", "Checks run", "Checks skipped"],
                [sev["High"], sev["Medium"], sev["Low"], len(CHECKS) - len(skipped), len(skipped)]]
